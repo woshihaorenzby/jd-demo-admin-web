@@ -36,6 +36,8 @@
 
 <style scoped>
   .app-container {
+
+
     width: 80%;
     margin: 120px auto;
   }
