@@ -1,7 +1,9 @@
 <template>
   <div class="app-container">
-    <el-card class="operate-container" shadow="never">
-      <i class="el-icon-tickets" style="margin-top: 5px"></i>
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="用户管理菜单" name="0"></el-tab-pane>
+      <el-tab-pane label="后台管理菜单" name="1"></el-tab-pane>
+    <el-card class="operate-container" shadow="never" >
       <span style="margin-top: 5px">数据列表</span>
       <el-button
         class="btn-add"
@@ -69,6 +71,7 @@
         </el-table-column>
       </el-table>
     </div>
+    </el-tabs>
     <div class="pagination-container">
       <el-pagination
         background
@@ -86,7 +89,6 @@
 
 <script>
   import {fetchList,deleteMenu,updateMenu,updateHidden} from '@/api/menu'
-
   export default {
     name: "menuList",
     data() {
@@ -112,6 +114,9 @@
       }
     },
     methods: {
+      handleClick(tab) {
+        this.getList(tab.name);
+      },
       resetParentId(){
         this.listQuery.pageNum = 1;
         if (this.$route.query.parentId != null) {
@@ -123,8 +128,9 @@
       handleAddMenu() {
         this.$router.push('/ums/addMenu');
       },
-      getList() {
+      getList(tabName) {
         this.listLoading = true;
+        this.listQuery.type = tabName==null?0:tabName;
         fetchList(this.parentId, this.listQuery).then(response => {
           this.listLoading = false;
           this.list = response.data.list;

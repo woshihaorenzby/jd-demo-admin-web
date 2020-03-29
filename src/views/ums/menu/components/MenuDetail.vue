@@ -31,6 +31,12 @@
           <el-radio :label="1">否</el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="菜单类型：">
+        <el-radio-group v-model="menu.type">
+            <el-radio :label="0">用户管理菜单</el-radio>
+            <el-radio :label="1">后台管理菜单</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="排序：">
         <el-input v-model="menu.sort"></el-input>
       </el-form-item>
@@ -51,7 +57,8 @@
     name: '',
     icon: '',
     hidden: 0,
-    sort: 0
+    sort: 0,
+    type:0,
   };
   export default {
     name: "MenuDetail",
@@ -77,7 +84,7 @@
           icon: [
             {required: true, message: '请输入前端图标', trigger: 'blur'},
             {min: 2, max: 140, message: '长度在 2 到 140 个字符', trigger: 'blur'}
-          ]
+          ],
         }
       }
     },
